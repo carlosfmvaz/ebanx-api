@@ -2,9 +2,9 @@ import { Request, Response } from "express";
 import AccountService from "./AccountService";
 
 export default class AccountController {
-    private accountService: AccountService;
-    
-    constructor(accountService: AccountService) {
+    private accountService;
+
+    constructor(accountService: any) {
         this.accountService = accountService;
     }
 
@@ -12,7 +12,26 @@ export default class AccountController {
         throw new Error("Not implemented");
     }
 
-    async handleDeposit(req: Request, res: Response) {
-        res.sendStatus(200);
+    async handleEvent(req: Request, res: Response) {
+        try {
+            const { body } = req;
+            if (body.type == 'deposit') {
+                const depositInfo = {
+                    type: body.type,
+                    destination: body.destination,
+                    amount: body.amount,
+                };
+                const deposit = await this.accountService.deposit(depositInfo);
+                return res.status(201).json(deposit);
+            } else if (body.type == 'withdraw') {
+
+            } else if (body.type == 'transfer') {
+
+            } else {
+                throw new Error("Unknown event");
+            }
+        } catch (error) {
+
+        }
     }
 }

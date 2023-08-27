@@ -8,6 +8,6 @@ routes.get("/", (req, res) => res.send("Hello World!"));
 routes.get("/balance", (req, res) => accountFactory().getBalance(req, res));
 
 // Events
-routes.post("/event", (req, res) => accountFactory().handleDeposit(req, res));
+routes.post("/event", (req, res) => accountFactory().handleEvent(req, res));
 
 export default routes;

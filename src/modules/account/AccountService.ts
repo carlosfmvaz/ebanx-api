@@ -1,5 +1,7 @@
+import DepositDTO from "./dto/DepositDTO";
+
 export default class AccountService {
-    constructor() {
-        
+    async deposit(depositInfo: DepositDTO) {
+        return depositInfo;
     }
 }
