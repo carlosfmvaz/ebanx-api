@@ -6,16 +6,7 @@ export default class AccountRepositoryInMemory implements IAccountRepository{
     private accountList: Array<any>;
 
     constructor() {
-        this.accountList = [
-            {
-                id: 100,
-                balance: 20,
-            },
-            {
-                id: 101,
-                balance: 90,
-            },
-        ];
+        this.accountList = [];
     }
 
     async get(id: number): Promise<false | Account> {

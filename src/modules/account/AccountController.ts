@@ -22,7 +22,7 @@ export default class AccountController {
                     amount: body.amount,
                 };
                 const deposit = await this.accountService.handleDeposit(depositInfo);
-                return res.status(201).json(deposit);
+                return res.status(201).json({ destination: deposit });
             } else if (body.type == 'withdraw') {
 
             } else if (body.type == 'transfer') {
