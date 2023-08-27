@@ -1,5 +1,5 @@
 export default interface DepositDTO {
     type: string,
-    destination: string,
+    destination: number,
     amount: number,
 }

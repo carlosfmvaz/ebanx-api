@@ -21,7 +21,7 @@ export default class AccountController {
                     destination: body.destination,
                     amount: body.amount,
                 };
-                const deposit = await this.accountService.deposit(depositInfo);
+                const deposit = await this.accountService.handleDeposit(depositInfo);
                 return res.status(201).json(deposit);
             } else if (body.type == 'withdraw') {
 
