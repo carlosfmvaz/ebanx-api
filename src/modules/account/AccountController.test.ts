@@ -1,5 +1,5 @@
 import axios from "axios";
-import AccountRepositoryInMemory from "../../repositories/in-memory/AccountRepositoryInMemory";
+import AccountRepositoryJson from "../../repositories/json/AccountRepositoryJson";
 import AccountService from "./AccountService";
 import AccountController from "./AccountController";
 
@@ -8,8 +8,8 @@ describe('AccountController test suite', () => {
     let responseMock: any;
 
     beforeEach(() => {
-        const accountRepositoryInMemory = new AccountRepositoryInMemory();
-        const accountService = new AccountService(accountRepositoryInMemory);
+        const accountRepositoryJson = new AccountRepositoryJson();
+        const accountService = new AccountService(accountRepositoryJson);
         accountController = new AccountController(accountService);
 
         responseMock = {
@@ -30,8 +30,8 @@ describe('AccountController test suite', () => {
         expect(responseMock.status).toBeCalledWith(201);
         expect(responseMock.json).toHaveBeenCalledWith({
             destination: {
-                id: 100,
-                balance: 30
+                id: "100",
+                balance: 10
             }
         });
     });

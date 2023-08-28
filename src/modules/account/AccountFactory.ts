@@ -1,12 +1,12 @@
-import AccountRepositoryInMemory from "../../repositories/in-memory/AccountRepositoryInMemory";
+import AccountRepositoryJson from "../../repositories/json/AccountRepositoryJson";
 import AccountController from "./AccountController";
 import AccountService from "./AccountService";
 
 export default function accountFactory() 
 {
-    const accountRepositoryInMemory = new AccountRepositoryInMemory(); 
+    const accountRepositoryJson = new AccountRepositoryJson(); 
 
-    const accountService = new AccountService(accountRepositoryInMemory);
+    const accountService = new AccountService(accountRepositoryJson);
     const accountController = new AccountController(accountService);
     return accountController;
 }

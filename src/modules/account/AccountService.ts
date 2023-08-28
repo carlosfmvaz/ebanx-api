@@ -13,7 +13,7 @@ export default class AccountService {
         const account = await this.accountRepository.get(depositInfo.destination);
         if (account) {
             account.deposit(depositInfo.amount);
-            return await this.accountRepository.save(account);
+            return await this.accountRepository.update(account);
         } else {
             const accountToCreate = Account.create(depositInfo.destination, depositInfo.amount);
             return this.accountRepository.save(accountToCreate);           
