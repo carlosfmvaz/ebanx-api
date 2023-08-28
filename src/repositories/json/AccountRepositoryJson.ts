@@ -45,6 +45,9 @@ export default class AccountRepositoryJson implements IAccountRepository {
     }
 
     async restoreInitialState(): Promise<void> {
-        await fs.copyFile('initialDummyData.json', 'dummyData.json');
+        const initialDummyData = path.join(__dirname, '..', '..', 'data/initialDummyData.json');
+        const dummyData = path.join(__dirname, '..', '..', 'data/dummyData.json');
+
+        await fs.copyFile(initialDummyData, dummyData);
     }
 }

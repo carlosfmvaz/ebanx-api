@@ -2,7 +2,7 @@ import { Router } from "express";
 import accountFactory from "../modules/account/AccountFactory";
 const routes = Router();
 
-routes.get("/", (req, res) => res.send("Hello World!"));
+routes.post("/reset", (req, res) => accountFactory().restoreInitialState(req, res));
 
 // Balance
 routes.get("/balance", (req, res) => accountFactory().getBalance(req, res));

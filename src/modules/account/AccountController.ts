@@ -34,4 +34,13 @@ export default class AccountController {
 
         }
     }
+
+    async restoreInitialState(req: Request, res: Response) {
+        try {
+            await this.accountService.restoreInitialState();
+            return res.sendStatus(201);
+        } catch (error) {
+            
+        }
+    }
 }

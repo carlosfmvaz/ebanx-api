@@ -19,4 +19,8 @@ export default class AccountService {
             return this.accountRepository.save(accountToCreate);           
         }
     }
+
+    async restoreInitialState() {
+        await this.accountRepository.restoreInitialState();
+    }
 }
