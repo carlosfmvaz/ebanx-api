@@ -9,7 +9,15 @@ export default class AccountController {
     }
 
     async getBalance(req: Request, res: Response) {
-        throw new Error("Not implemented");
+        try {
+            const { params } = req;
+            if (!params.account_id) throw new Error("Account not found");
+            
+            const balance = await this.accountService.getBalance(params.account_id);
+            return res.status(200).json({ balance });
+        } catch (error) {
+            
+        }
     }
 
     async handleEvent(req: Request, res: Response) {
