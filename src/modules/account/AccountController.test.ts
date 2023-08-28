@@ -66,6 +66,19 @@ describe('AccountController test suite', () => {
         });
     });
 
+    it('should get balance from existing account', async () => {
+        const requestMock = {
+            params: {
+                account_id: "100"
+            }
+        }
+        await accountController.getBalance(requestMock, responseMock);
+        expect(responseMock.status).toBeCalledWith(200);
+        expect(responseMock.json).toHaveBeenCalledWith({
+            balance: 20
+        });
+    });
+
     it('should withdraw from existing account', async () => {
         const requestMock = {
             body: {

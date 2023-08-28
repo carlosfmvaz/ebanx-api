@@ -49,6 +49,15 @@ export default class AccountService {
         return { origin: updatedOriginAccount, destination: updatedDestinationAccount };
     }
 
+    async getBalance(accountId: number) {
+        const account = await this.accountRepository.get(accountId);
+        if (account) {
+            return account.balance;
+        } else {
+            throw new Error("Account not found");
+        }
+    }
+
     async restoreInitialState() {
         await this.accountRepository.restoreInitialState();
     }
