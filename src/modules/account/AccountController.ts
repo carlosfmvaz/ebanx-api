@@ -32,7 +32,14 @@ export default class AccountController {
                 const withdraw = await this.accountService.handleWithdraw(withdrawInfo);
                 return res.status(201).json({ origin: withdraw });
             } else if (body.type == 'transfer') {
-
+                const transferInfo = {
+                    type: body.type,
+                    origin: body.origin,
+                    destination: body.destination,
+                    amount: body.amount,
+                };
+                const transfer = await this.accountService.handleTransfer(transferInfo);
+                return res.status(201).json({ origin: transfer.origin, destination: transfer.destination });
             } else {
                 throw new Error("Unknown event");
             }

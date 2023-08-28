@@ -21,6 +21,11 @@ describe('AccountController test suite', () => {
         };
     });
 
+    beforeEach(async () => {
+        responseMock.status.mockClear();
+        responseMock.json.mockClear();
+    });
+
     afterAll(async () => {
         await accountController.restoreInitialState({}, {});
     })
@@ -74,6 +79,29 @@ describe('AccountController test suite', () => {
         expect(responseMock.json).toHaveBeenCalledWith({
             origin: {
                 id: "100",
+                balance: 15
+            }
+        });
+    });
+
+    it('should transfer from existing account', async () => {
+        const requestMock = {
+            body: {
+                type: "transfer",
+                origin: "100",
+                amount: 15,
+                destination: "300"
+            }
+        }
+        await accountController.handleEvent(requestMock, responseMock);
+        expect(responseMock.status).toBeCalledWith(201);
+        expect(responseMock.json).toHaveBeenCalledWith({
+            origin: {
+                id: "100",
+                balance: 0
+            },
+            destination: {
+                id: "300",
                 balance: 15
             }
         });

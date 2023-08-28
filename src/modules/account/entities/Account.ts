@@ -1,8 +1,9 @@
 export default class Account {
     id?: number;
-    balance?: number;
+    balance: number;
 
     private constructor() {
+        this.balance = 0;
     }
 
     static create(id: number, balance: number) {
@@ -20,17 +21,14 @@ export default class Account {
     }
 
     deposit(amount: number) {
-        if (amount < 0) throw new Error("The amount cannot be negative");
-        if (!this.balance) throw new Error("Balance must be defined");
-
+        if (amount <= 0) throw new Error("The amount cannot be negative or zero");
         this.balance += amount;
     }
 
     withdraw(amount: number) {
-        if (amount < 0) throw new Error("The amount cannot be negative");
-        if (!this.balance) throw new Error("Balance must be defined");
+        if (amount <= 0) throw new Error("The amount cannot be negative or zero");
         if (this.balance < amount) throw new Error("Insufficient funds");
-
+        
         this.balance -= amount;
     }
 }
