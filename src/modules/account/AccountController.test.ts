@@ -60,4 +60,22 @@ describe('AccountController test suite', () => {
             }
         });
     });
+
+    it('should withdraw from existing account', async () => {
+        const requestMock = {
+            body: {
+                type: "withdraw",
+                origin: "100",
+                amount: 5
+            }
+        }
+        await accountController.handleEvent(requestMock, responseMock);
+        expect(responseMock.status).toBeCalledWith(201);
+        expect(responseMock.json).toHaveBeenCalledWith({
+            origin: {
+                id: "100",
+                balance: 15
+            }
+        });
+    });
 });

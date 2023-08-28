@@ -25,4 +25,12 @@ export default class Account {
 
         this.balance += amount;
     }
+
+    withdraw(amount: number) {
+        if (amount < 0) throw new Error("The amount cannot be negative");
+        if (!this.balance) throw new Error("Balance must be defined");
+        if (this.balance < amount) throw new Error("Insufficient funds");
+
+        this.balance -= amount;
+    }
 }
