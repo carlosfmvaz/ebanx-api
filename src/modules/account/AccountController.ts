@@ -59,7 +59,7 @@ export default class AccountController {
     async restoreInitialState(req: Request, res: Response, next: NextFunction) {
         try {
             await this.accountService.restoreInitialState();
-            return res.sendStatus(201);
+            return res.sendStatus(200);
         } catch (error: any) {
             next(error);
         }
