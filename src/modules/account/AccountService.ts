@@ -1,3 +1,4 @@
+import ApiError from "../../helpers/ApiError";
 import IAccountRepository from "../../repositories/IAccountRepository";
 import DepositDTO from "./dto/DepositDTO";
 import TransferDTO from "./dto/TransferDTO";
@@ -28,7 +29,7 @@ export default class AccountService {
             account.withdraw(withdrawInfo.amount);
             return await this.accountRepository.update(account);
         } else {
-            throw new Error("Account not found");
+            throw new ApiError("Account not found", 404);
         }
     }
 
@@ -36,7 +37,7 @@ export default class AccountService {
         let originAccount = await this.accountRepository.get(transferInfo.origin);
         let destinationAccount = await this.accountRepository.get(transferInfo.destination);
 
-        if (!originAccount) throw new Error("Origin account not found");
+        if (!originAccount) throw new ApiError("Origin account not found", 404);
 
         if (!destinationAccount) {
             destinationAccount = Account.create(transferInfo.destination, 0);
@@ -46,6 +47,7 @@ export default class AccountService {
         
         const updatedOriginAccount = await this.accountRepository.update(originAccount);
         const updatedDestinationAccount = await this.accountRepository.update(destinationAccount);
+        
         return { origin: updatedOriginAccount, destination: updatedDestinationAccount };
     }
 
@@ -54,7 +56,7 @@ export default class AccountService {
         if (account) {
             return account.balance;
         } else {
-            throw new Error("Account not found");
+            throw new ApiError("Account not found", 404);
         }
     }
 

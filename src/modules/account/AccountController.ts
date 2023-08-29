@@ -1,5 +1,5 @@
-import { Request, Response } from "express";
-import AccountService from "./AccountService";
+import { NextFunction, Request, Response } from "express";
+import ApiError from "../../helpers/ApiError";
 
 export default class AccountController {
     private accountService;
@@ -8,19 +8,19 @@ export default class AccountController {
         this.accountService = accountService;
     }
 
-    async getBalance(req: Request, res: Response) {
+    async getBalance(req: Request, res: Response, next: NextFunction) {
         try {
-            const { params } = req;
-            if (!params.account_id) throw new Error("Account not found");
-            
-            const balance = await this.accountService.getBalance(params.account_id);
-            return res.status(200).json({ balance });
-        } catch (error) {
-            
+            const { query } = req;
+            if (!query.account_id) throw new ApiError("Account not found", 404);
+
+            const balance = await this.accountService.getBalance(query.account_id);
+            return res.status(200).json(balance);
+        } catch (error: any) {
+            next(error);
         }
     }
 
-    async handleEvent(req: Request, res: Response) {
+    async handleEvent(req: Request, res: Response, next: NextFunction) {
         try {
             const { body } = req;
             if (body.type == 'deposit') {
@@ -49,19 +49,19 @@ export default class AccountController {
                 const transfer = await this.accountService.handleTransfer(transferInfo);
                 return res.status(201).json({ origin: transfer.origin, destination: transfer.destination });
             } else {
-                throw new Error("Unknown event");
+                throw new ApiError("Unknown event", 404);
             }
-        } catch (error) {
-
+        } catch (error: any) {
+            next(error);
         }
     }
 
-    async restoreInitialState(req: Request, res: Response) {
+    async restoreInitialState(req: Request, res: Response, next: NextFunction) {
         try {
             await this.accountService.restoreInitialState();
             return res.sendStatus(201);
-        } catch (error) {
-            
+        } catch (error: any) {
+            next(error);
         }
     }
 }

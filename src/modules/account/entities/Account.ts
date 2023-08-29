@@ -1,3 +1,5 @@
+import ApiError from "../../../helpers/ApiError";
+
 export default class Account {
     id?: number;
     balance: number;
@@ -8,6 +10,9 @@ export default class Account {
 
     static create(id: number, balance: number) {
         const account = new Account();
+        
+        if (balance < 0) throw new ApiError("The initial balance cannot be negative or zero", 400);
+
         account.id = id;
         account.balance = balance;
         return account;
@@ -21,13 +26,13 @@ export default class Account {
     }
 
     deposit(amount: number) {
-        if (amount <= 0) throw new Error("The amount cannot be negative or zero");
+        if (amount <= 0) throw new ApiError("The amount cannot be negative or zero", 400);
         this.balance += amount;
     }
 
     withdraw(amount: number) {
-        if (amount <= 0) throw new Error("The amount cannot be negative or zero");
-        if (this.balance < amount) throw new Error("Insufficient funds");
+        if (amount <= 0) throw new ApiError("The amount cannot be negative or zero", 400);
+        if (this.balance < amount) throw new ApiError("Insufficient funds", 400);
         
         this.balance -= amount;
     }

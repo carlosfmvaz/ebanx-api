@@ -2,12 +2,12 @@ import { Router } from "express";
 import accountFactory from "../modules/account/AccountFactory";
 const routes = Router();
 
-routes.post("/reset", (req, res) => accountFactory().restoreInitialState(req, res));
+routes.post("/reset", (req, res, next) => accountFactory().restoreInitialState(req, res, next));
 
 // Balance
-routes.get("/balance", (req, res) => accountFactory().getBalance(req, res));
+routes.get("/balance", (req, res, next) => accountFactory().getBalance(req, res, next));
 
 // Events
-routes.post("/event", (req, res) => accountFactory().handleEvent(req, res));
+routes.post("/event", (req, res, next) => accountFactory().handleEvent(req, res, next));
 
 export default routes;
